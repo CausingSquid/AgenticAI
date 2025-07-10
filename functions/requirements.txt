@@ -4,3 +4,4 @@ firebase-admin
 flask
 google-genai
 mcp
+google-generativeai==0.4.1

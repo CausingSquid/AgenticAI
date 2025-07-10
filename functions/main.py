@@ -1,43 +1,48 @@
+# functions/main.py
+
 from firebase_functions import https_fn
 from firebase_functions.options import set_global_options
 from firebase_admin import initialize_app
-from flask import jsonify
-from generate_prompt import generate_financial_answer
+from generate_prompt_mock import generate_financial_answer
+import json
+import traceback
 
+# 🔧 Optional: limit concurrent containers for cost control
 set_global_options(max_instances=10)
+
+# 🔑 Initialize Firebase Admin SDK
 initialize_app()
+
 @https_fn.on_request()
 def ask(req: https_fn.Request) -> https_fn.Response:
     try:
-        data = req.get_json()
-        question = data.get("question", "")
-        if not question:
-            return https_fn.Response("Missing question", status=400)
+        # 📥 Safely parse request JSON
+        data = req.get_json(silent=True)
+        question = data.get("question", "") if data else ""
 
-        mcp_data = """
-Net Worth: ₹8,68,721
-Credit Score: 746
-Outstanding Loans: ₹75,000
-EPF Balance: ₹2.1L
-SIPs:
-- Canara Robeco: 129% XIRR
-- ICICI Balanced Advantage: -17.4%
-- UTI Overnight: -82%
-"""
-        full_prompt = f"""You are a smart financial assistant. Here's the user's financial data:
+        if not question.strip():
+            return https_fn.Response(
+                json.dumps({"error": "Missing or empty 'question'."}),
+                status=400,
+                content_type="application/json"
+            )
 
-{mcp_data}
+        print(f"📩 Received question: {question}")
 
-User question: {question}
+        # 🧠 Call Gemini with mock MCP
+        answer = generate_financial_answer(question)
 
-Answer in clear, simple financial advice."""
-
-        answer = generate_financial_answer(full_prompt)
-
-        import json
-        return https_fn.Response(json.dumps({"answer": answer}), status=200, content_type="application/json")
+        return https_fn.Response(
+            json.dumps({"answer": answer}),
+            status=200,
+            content_type="application/json"
+        )
 
     except Exception as e:
-        print(f" ERROR: {e}")
-        return https_fn.Response("Internal error: " + str(e), status=500)
-
+        print("🔥 ERROR:", e)
+        traceback.print_exc()
+        return https_fn.Response(
+            json.dumps({"error": str(e)}),
+            status=500,
+            content_type="application/json"
+        )
