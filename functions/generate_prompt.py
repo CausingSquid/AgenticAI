@@ -11,7 +11,7 @@ def get_networth_text(result):
     return "Could not fetch net worth info."
 
 def generate_financial_answer(question: str) -> str:
-    # 🧠 Run async MCP client
+    # 🧠 Run async MCP client 
     result = asyncio.run(fetch_networth())
     mcp_text = get_networth_text(result)
 
@@ -25,8 +25,8 @@ Answer in clear, simple financial advice."""
 
     client = genai.Client(
         vertexai=True,
-        project="finance-ai-assistant-a9a4f",
-        location="us-central1",
+        project="your-project-id",
+        location="location-place",
     )
 
     contents = [
