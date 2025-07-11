@@ -25,8 +25,8 @@ Answer in clear, simple financial advice. Just make it shorter and upto the poin
 
     client = genai.Client(
         vertexai=True,
-        project="finance-ai-assistant-a9a4f",
-        location="us-central1",
+        project="your-project-id",
+        location="location-place",
     )
 
     contents = [
