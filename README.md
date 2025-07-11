@@ -36,8 +36,8 @@ An intelligent, cross-platform financial assistant that connects **real financia
 | Data Layer   | Fi MCP Server                     |
 | Backend      | Firebase Functions / Cloud Run    |
 | Frontend     | Flutter                           |
-| Auth         | Auth0 / Firebase Auth (optional)  |
-| DB (optional)| Firestore (for session history)   |
+| Auth         | Auth0 / Firebase Auth             |
+| DB           | Firestore (for session history)   |
 
 ---
 
