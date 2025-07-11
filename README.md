@@ -51,7 +51,7 @@ git clone https://github.com/your-username/ai-finance-assistant.git
 cd ai-finance-assistant
 
 firebase init functions
-firebase deploy --only "functions"
+firebase deploy --only "functions"    #For deployment
 
 python generate_prompt.py  #For local viewing
 
