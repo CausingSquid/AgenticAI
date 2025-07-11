@@ -45,7 +45,7 @@ Done by Ashwin AS and Soorej S
 
 ## 🔧 Setup Instructions
 
-### 1. Clone the Repo 
+
 ```bash
 git clone https://github.com/your-username/ai-finance-assistant.git
 cd ai-finance-assistant
@@ -53,5 +53,6 @@ cd ai-finance-assistant
 firebase init functions
 firebase deploy --only "functions"
 
-python generate_prompt.py  #For local viewing 
+python generate_prompt.py  #For local viewing
+
 
